@@ -33,6 +33,13 @@ namespace Blog
             })
                 .AddEntityFrameworkStores<AppDbContext>();
 
+            // Since by default Identity does not have redirect url for the not authorized users we have to override its behavior here.
+            // Cookies is responsible for authentication hence the ConfigureApplicationCookie method is needed.
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Auth/Login";
+            });
+
             services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
