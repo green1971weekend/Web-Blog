@@ -3,16 +3,17 @@ using Blog.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Blog.Data.Repository;
 
 namespace Blog.Controllers
 {
     public class HomeController : Controller
     {
-        AppDbContext _context;
+        private readonly IRepository<Post> _repository;
 
-        public HomeController(AppDbContext context)
+        public HomeController(IRepository<Post> repository)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         public IActionResult Index()
@@ -34,10 +35,14 @@ namespace Blog.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Post post)
         {
-            _context.Posts.Add(post);
-            await _context.SaveChangesAsync();
+            _repository.Add(post);
 
-            return RedirectToAction("Index");
+            if(await _repository.SaveChangesAsync())
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(post);
         }
     }
 }
