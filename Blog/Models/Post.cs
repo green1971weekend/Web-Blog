@@ -12,6 +12,11 @@ namespace Blog.Models
     public class Post
     {
         /// <summary>
+        /// Post identifier.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Title of the post. Default value set to "" to avoid null exceptions.
         /// </summary>
         public string Title { get; set; } = "";
