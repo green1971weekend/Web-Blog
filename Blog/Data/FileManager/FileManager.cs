@@ -17,6 +17,12 @@ namespace Blog.Data.FileManager
         }
 
         ///<inheritdoc />
+        public FileStream ImageStream(string image)
+        {
+            return new FileStream(Path.Combine(_imagePath, image), FileMode.Open, FileAccess.Read); 
+        }
+
+        ///<inheritdoc />
         public async Task<string> SaveImage(IFormFile image)
         {
             try
