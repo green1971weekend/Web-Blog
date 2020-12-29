@@ -1,4 +1,6 @@
-﻿namespace Blog.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Blog.ViewModels
 {
     /// <summary>
     /// View model captures on data from front-end razor pages.
@@ -13,6 +15,7 @@
         /// <summary>
         /// Password credentials.
         /// </summary>
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }
