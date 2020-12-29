@@ -27,6 +27,8 @@ namespace Blog.ViewModels
         /// </summary>
         public string Body { get; set; } = "";
 
+        public string CurrentImage { get; set; }
+
         /// <summary>
         /// Title of the image. IFormFile is basically an interface for any sort of file, image, video etc.
         /// </summary>
