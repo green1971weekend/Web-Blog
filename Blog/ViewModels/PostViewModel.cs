@@ -27,6 +27,24 @@ namespace Blog.ViewModels
         /// </summary>
         public string Body { get; set; } = "";
 
+        /// <summary>
+        /// Description of post using by search engine optimization.
+        /// </summary>
+        public string Description { get; set; } = "";
+
+        /// <summary>
+        /// Tags of post using by search engine optimization.
+        /// </summary>
+        public string Tags { get; set; } = "";
+
+        /// <summary>
+        /// Category of post using by search engine optimization.
+        /// </summary>
+        public string Category { get; set; } = "";
+
+        /// <summary>
+        /// Default image.
+        /// </summary>
         public string CurrentImage { get; set; }
 
         /// <summary>

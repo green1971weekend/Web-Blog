@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Post>
 
 @{ 
-
+    //This is how we supply values to metafields in _Layout.
+    ViewBag.Title = "Blog";
+    ViewBag.Description = "Publish your pictures with cool description attached to it";
+    ViewBag.Keywords = "blog programming travel photography";
 }
-@*<h2>Home Page</h2>
-
-<img src="~/content/static/pexels-photo-1448709.jpeg" width="500"/>*@
 
 <div class="main-img">
     <span class="title">My Blog</span>

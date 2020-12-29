@@ -1,18 +1,12 @@
 ﻿@model Post
 
 @{ 
-
+    //This is how we supply values to metafields in _Layout.
+    ViewBag.Title = Model.Title;
+    ViewBag.Description = Model.Description;
+    ViewBag.Keywords = $"{Model.Tags?.Replace(",", " ")} {Model.Category}";
 }
 
-
-@*<h2>@Model.Title</h2>
-
-@if(!string.IsNullOrEmpty(Model.Image))
-{
-    var img_path = $"/Image/{Model.Image}";
-    <img src="@img_path" alt="Downloaded image" width="500" />
-}
-<p>@Model.Body</p>*@
 
 <div class="container">
     <div class="post no-shadow">
