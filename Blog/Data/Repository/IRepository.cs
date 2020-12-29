@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Blog.Data.Repository
@@ -47,5 +49,11 @@ namespace Blog.Data.Repository
         /// <returns></returns>
         Task<bool> SaveChangesAsync();
 
+        /// <summary>
+        /// Get specific entities sorted by the condition.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        List<T> GetAllByCondition(Expression<Func<T, bool>> expression);
     }
 }

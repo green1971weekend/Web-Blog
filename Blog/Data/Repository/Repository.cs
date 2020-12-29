@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Blog.Data.Repository
@@ -57,6 +58,12 @@ namespace Blog.Data.Repository
             }
 
             return false;
+        }
+
+        ///<inheritdoc/>
+        public List<T> GetAllByCondition(Expression<Func<T, bool>> expression)
+        {
+            return _dbSet.Where(expression).ToList();
         }
     }
 }

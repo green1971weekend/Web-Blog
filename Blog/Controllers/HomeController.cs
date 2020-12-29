@@ -19,9 +19,13 @@ namespace Blog.Controllers
             _fileManager = fileManager ?? throw new ArgumentNullException(nameof(fileManager));
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string category)
         {
-            var posts = _repository.GetAll();
+            var posts = string.IsNullOrEmpty(category) 
+                ? _repository.GetAll() 
+                : _repository.GetAllByCondition(post => post.Category.ToLower().Equals(category.ToLower()));
+
+            //var posts = _repository.GetAll();
             return View(posts);
         }
 
