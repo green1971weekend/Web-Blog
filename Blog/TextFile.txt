@@ -2,4 +2,7 @@
 
 2. Later from another local machine we need to change it and see result
 
+3. Here's promised change!
+2. Later from another local machine we need to change it and see result
+
 4. Already write some change without pulling 3-rd.
