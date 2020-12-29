@@ -1,11 +1,10 @@
-﻿using Blog.Data.Repository;
+﻿using Blog.Data.FileManager;
+using Blog.Data.Repository;
 using Blog.Models;
+using Blog.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Blog.Controllers
@@ -14,10 +13,12 @@ namespace Blog.Controllers
     public class PanelController : Controller
     {
         private readonly IRepository<Post> _repository;
+        private readonly IFileManager _fileManager;
 
-        public PanelController(IRepository<Post> repository)
+        public PanelController(IRepository<Post> repository, IFileManager fileManager)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _fileManager = fileManager ?? throw new ArgumentNullException(nameof(fileManager));
         }
 
         public IActionResult Index()
@@ -40,16 +41,30 @@ namespace Blog.Controllers
         {
             if (id == null)
             {
-                return View(new Post());
+                return View(new PostViewModel());
             }
 
             var post = _repository.Get((int)id);
-            return View(post);
+            return View(new PostViewModel 
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Body = post.Body
+            });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Post post)
+        public async Task<IActionResult> Edit(PostViewModel vm)
         {
+
+            var post = new Post
+            {
+                Id = vm.Id,
+                Title = vm.Title,
+                Body = vm.Body,
+                Image = await _fileManager.SaveImage(vm.Image)
+            };
+
             if (post.Id > 0)
                 _repository.Update(post);
             else

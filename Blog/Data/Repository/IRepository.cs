@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Blog.Data.Repository
 {
     /// <summary>
-    /// Serves as wrapper on DbContext functionality.
+    /// Serves as wrapper on DbContext functionality. Repository handels read and write database and abstracts calls to it.
     /// </summary>
     public interface IRepository<T> where T : class
     {

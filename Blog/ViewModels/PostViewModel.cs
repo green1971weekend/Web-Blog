@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Models
+namespace Blog.ViewModels
 {
     /// <summary>
-    /// Post model for read/write action to database.
+    /// View model captures on data from front-end razor pages.
     /// </summary>
-    public class Post
+    public class PostViewModel
     {
         /// <summary>
         /// Post identifier.
@@ -27,9 +28,9 @@ namespace Blog.Models
         public string Body { get; set; } = "";
 
         /// <summary>
-        /// Title of the image.
+        /// Title of the image. IFormFile is basically an interface for any sort of file, image, video etc.
         /// </summary>
-        public string Image { get; set; } = "";
+        public IFormFile Image { get; set; } = null;
 
         /// <summary>
         /// Date time creation of post.
