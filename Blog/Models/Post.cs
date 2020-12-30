@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blog.Models.Comments;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,5 +51,10 @@ namespace Blog.Models
         /// Date time creation of post.
         /// </summary>
         public DateTime Created { get; set; } = DateTime.Now;
+
+        /// <summary>
+        /// Reference to the main comments belonged to this post.
+        /// </summary>
+        public List<MainComment> MainComments { get; set; }
     }
 }
