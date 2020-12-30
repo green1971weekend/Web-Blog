@@ -40,8 +40,10 @@ namespace Blog.Controllers
         /// Dynamic image streaming.
         /// </summary>
         /// <param name="image">Image title.</param>
+        /// <attributes>Response cache allows to cache resulted images. CacheProfileName indicates to profile defined in startup.cs</attributes>
         /// <returns>Stream of the requested image.</returns>
         [HttpGet("/Image/{image}")]
+        [ResponseCache(CacheProfileName = "Monthly")] 
         public IActionResult Image(string image)
         {
             var mime = image.Substring(image.LastIndexOf(".") + 1);

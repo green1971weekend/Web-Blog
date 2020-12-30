@@ -4,6 +4,7 @@ using Blog.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,7 +43,11 @@ namespace Blog
                 options.LoginPath = "/Auth/Login";
             });
 
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddMvc(options => 
+            {
+                options.EnableEndpointRouting = false;
+                options.CacheProfiles.Add("Monthly", new CacheProfile { Duration = 60 * 60 * 24 * 7 * 4 });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

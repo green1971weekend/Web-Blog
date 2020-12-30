@@ -1,0 +1,19 @@
+[
+  // With Web Essentials extension help creates the css-code minified version.
+  {
+    "inputFiles": [ "wwwroot/css/site.css" ],
+    "outputFileName": "wwwroot/css/site.min.css"
+  },
+
+  // With Web Essentials extension help creates the js-code minified version.
+  {
+    "inputFiles": [ "wwwroot/js/site.js" ],
+    "outputFileName": "wwwroot/js/site.min.js",
+    "minify": {
+      // reduces size of js file
+      "enabled": true,
+      // makes variable titles shorter ( var options = {} ==>> var o = {} )
+      "renameLocals": true
+    }
+  }
+]

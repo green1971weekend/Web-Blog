@@ -73,7 +73,7 @@ namespace Blog.Data.FileManager
         }
 
         /// <summary>
-        /// Image optimization for uploading not too large files to the host server.
+        /// Image optimization for uploading not too large files to the host server. Optimization implemented by MagicScaler package.
         /// </summary>
         /// <returns></returns>
         private ProcessImageSettings ImageOptions() => new ProcessImageSettings

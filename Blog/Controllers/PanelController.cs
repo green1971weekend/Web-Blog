@@ -65,7 +65,7 @@ namespace Blog.Controllers
                 Id = vm.Id,
                 Title = vm.Title,
                 Body = vm.Body,
-                Image = await _fileManager.SaveImage(vm.Image),
+                Image = _fileManager.SaveImage(vm.Image),
                 Description = vm.Description,
                 Category = vm.Category,
                 Tags = vm.Tags
@@ -79,7 +79,7 @@ namespace Blog.Controllers
                 {
                     _fileManager.RemoveImage(vm.CurrentImage);
                 }
-                post.Image = await _fileManager.SaveImage(vm.Image);
+                post.Image = _fileManager.SaveImage(vm.Image);
             }
 
             if (post.Id > 0)
