@@ -79,12 +79,14 @@ namespace Blog.Controllers
             }
             else
             {
-                new SubComment
+                var comment = new SubComment
                 {
                     MainCommentId = vm.MainCommentId,
                     Message = vm.Message,
                     Created = DateTime.Now,
                 };
+
+                _postRepositoryExtension.AddSubComment(comment);
             }
 
             await _repository.SaveChangesAsync();
