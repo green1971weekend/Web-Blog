@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Blog.Data.FileManager
@@ -17,7 +13,7 @@ namespace Blog.Data.FileManager
         /// Saves an image to the file system.
         /// </summary>
         /// <param name="image">Input image.</param>
-        /// <returns>Image title.</returns>
+        /// <returns>Endpoint string.</returns>
         Task<string> SaveImage(IFormFile image);
 
         /// <summary>
@@ -26,5 +22,12 @@ namespace Blog.Data.FileManager
         /// <param name="image"></param>
         /// <returns></returns>
         FileStream ImageStream(string image);
+
+        /// <summary>
+        /// Remove a specific image from a file system. Optimization configured, every time when admin changes the existing image under post to new one the older one removes from file system automatically.
+        /// </summary>
+        /// <param name="image">An image title.</param>
+        /// <returns></returns>
+        bool RemoveImage(string image);
     }
 }

@@ -60,7 +60,6 @@ namespace Blog.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(PostViewModel vm)
         {
-
             var post = new Post
             {
                 Id = vm.Id,
@@ -73,9 +72,15 @@ namespace Blog.Controllers
             };
 
             if (vm.Image == null)
-                post.Image = "Same";
+                post.Image = vm.CurrentImage;
             else
+            {
+                if(!string.IsNullOrEmpty(vm.CurrentImage))
+                {
+                    _fileManager.RemoveImage(vm.CurrentImage);
+                }
                 post.Image = await _fileManager.SaveImage(vm.Image);
+            }
 
             if (post.Id > 0)
                 _repository.Update(post);

@@ -48,7 +48,26 @@ namespace Blog.Data.FileManager
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return "Could not save an image";
+                return "Error";
+            }
+        }
+
+        ///<inheritdoc />
+        public bool RemoveImage(string image)
+        {
+            try
+            {
+                var file = Path.Combine(_imagePath, image);
+
+                if(File.Exists(file))
+                    File.Delete(file);
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
             }
         }
     }
