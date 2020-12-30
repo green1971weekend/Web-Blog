@@ -14,7 +14,7 @@ namespace Blog.Data.FileManager
         /// </summary>
         /// <param name="image">Input image.</param>
         /// <returns>Endpoint string.</returns>
-        Task<string> SaveImage(IFormFile image);
+        string SaveImage(IFormFile image);
 
         /// <summary>
         /// Download an image from the file system.

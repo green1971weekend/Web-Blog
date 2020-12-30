@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using PhotoSauce.MagicScaler;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -23,11 +24,11 @@ namespace Blog.Data.FileManager
         }
 
         ///<inheritdoc />
-        public async Task<string> SaveImage(IFormFile image)
+        public string SaveImage(IFormFile image)
         {
             try
             {
-                // Instead of hardcode path like "/path/somefolder/subfolder.." use Path.Combine() which prevents different sorts of errors.
+                // Instead of hardcode path like "/wwwroot/blog/.." use Path.Combine() which prevents different sorts of errors.
                 var save_path = Path.Combine(_imagePath);
 
                 if (!Directory.Exists(_imagePath))
@@ -40,7 +41,7 @@ namespace Blog.Data.FileManager
 
                 using (var fileStream = new FileStream(Path.Combine(save_path, fileName), FileMode.Create))
                 {
-                    await image.CopyToAsync(fileStream);
+                    MagicImageProcessor.ProcessImage(image.OpenReadStream(), fileStream, ImageOptions());
                 }
 
                 return fileName;
@@ -70,5 +71,20 @@ namespace Blog.Data.FileManager
                 return false;
             }
         }
+
+        /// <summary>
+        /// Image optimization for uploading not too large files to the host server.
+        /// </summary>
+        /// <returns></returns>
+        private ProcessImageSettings ImageOptions() => new ProcessImageSettings
+        {
+            Width = 800,
+            Height = 500, 
+            ResizeMode = CropScaleMode.Crop,
+
+            SaveFormat = FileFormat.Jpeg,
+            JpegQuality = 100,
+            JpegSubsampleMode = ChromaSubsampleMode.Subsample420
+        };
     }
 }
