@@ -2,6 +2,7 @@
 using Blog.Models.Comments;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Blog.Data.Wrapper
@@ -31,6 +32,17 @@ namespace Blog.Data.Wrapper
         public void AddSubComment(SubComment comment)
         {
             _context.SubComments.Add(comment);
+        }
+
+        ///<inheritdoc/>
+        public List<Post> GetAllPostsByPagination(int pageNumber)
+        {
+            int pageSize = 5;
+            int pageCount = _context.Posts.Count() / pageSize;
+            return _context.Posts
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToList();
         }
     }
 }

@@ -27,13 +27,20 @@ namespace Blog.Controllers
             _postRepositoryExtension = postRepositoryExtension ?? throw new ArgumentNullException(nameof(postRepositoryExtension));
         }
 
-        public IActionResult Index(string category)
+        public IActionResult Index(int pageNumber, string category)
         {
-            var posts = string.IsNullOrEmpty(category) 
-                ? _repository.GetAll() 
-                : _repository.GetAllByCondition(post => post.Category.ToLower().Equals(category.ToLower()));
+            if (pageNumber < 1)
+                return RedirectToAction("Index", new { pageNumber = 1, category });
 
-            return View(posts);
+            var vm = new IndexViewModel
+            {
+                PageNumber = pageNumber,
+                Posts = string.IsNullOrEmpty(category)
+                    ? _postRepositoryExtension.GetAllPostsByPagination(pageNumber)
+                    : _repository.GetAllByCondition(post => post.Category.ToLower().Equals(category.ToLower()))
+            };
+
+            return View(vm);
         }
 
         public IActionResult Post(int id)

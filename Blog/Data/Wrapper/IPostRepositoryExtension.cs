@@ -1,5 +1,6 @@
 ﻿using Blog.Models;
 using Blog.Models.Comments;
+using System.Collections.Generic;
 
 namespace Blog.Data.Wrapper
 {
@@ -16,9 +17,16 @@ namespace Blog.Data.Wrapper
         Post GetIncludedPostEntities(int id);
 
         /// <summary>
+        /// Add the passing sub comment to the database.
+        /// </summary>
+        /// <param name="comment">Sub comment.</param>
+        void AddSubComment(SubComment comment);
+
+        /// <summary>
         /// 
         /// </summary>
-        /// <param name="comment"></param>
-        void AddSubComment(SubComment comment);
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
+        List<Post> GetAllPostsByPagination(int pageNumber);
     }
 }
