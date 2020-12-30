@@ -1,6 +1,7 @@
 using Blog.Data;
 using Blog.Data.FileManager;
 using Blog.Data.Repository;
+using Blog.Data.Wrapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -25,6 +26,7 @@ namespace Blog
         {
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IFileManager, FileManager>();
+            services.AddScoped<IPostRepositoryExtension, PostRepositoryExtension>();
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_config["DefaultConnection"]));
 

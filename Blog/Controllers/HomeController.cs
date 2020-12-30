@@ -1,8 +1,12 @@
 ﻿using Blog.Data.FileManager;
 using Blog.Data.Repository;
+using Blog.Data.Wrapper;
 using Blog.Models;
+using Blog.Models.Comments;
+using Blog.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Blog.Controllers
@@ -13,10 +17,14 @@ namespace Blog.Controllers
 
         private readonly IFileManager _fileManager;
 
-        public HomeController(IRepository<Post> repository, IFileManager fileManager)
+        private readonly IPostRepositoryExtension _postRepositoryExtension;
+        public HomeController(IRepository<Post> repository, 
+                                IFileManager fileManager,
+                                IPostRepositoryExtension postRepositoryExtension)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _fileManager = fileManager ?? throw new ArgumentNullException(nameof(fileManager));
+            _postRepositoryExtension = postRepositoryExtension ?? throw new ArgumentNullException(nameof(postRepositoryExtension));
         }
 
         public IActionResult Index(string category)
@@ -25,13 +33,12 @@ namespace Blog.Controllers
                 ? _repository.GetAll() 
                 : _repository.GetAllByCondition(post => post.Category.ToLower().Equals(category.ToLower()));
 
-            //var posts = _repository.GetAll();
             return View(posts);
         }
 
         public IActionResult Post(int id)
         {
-            var post = _repository.Get(id);
+            var post = _postRepositoryExtension.GetIncludedPostEntities(id);
 
             return View(post);
         }
@@ -48,6 +55,41 @@ namespace Blog.Controllers
         {
             var mime = image.Substring(image.LastIndexOf(".") + 1);
             return new FileStreamResult(_fileManager.ImageStream(image), $"image/{mime}");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Comment(CommentViewModel vm)
+        {
+            if (!ModelState.IsValid)
+                return RedirectToAction("Post", new { id = vm.PostId });
+
+            var post = _postRepositoryExtension.GetIncludedPostEntities(vm.PostId);
+
+            if (vm.MainCommentId == 0)
+            {
+                post.MainComments ??= new List<MainComment>();
+
+                post.MainComments.Add(new MainComment()
+                {
+                    Message = vm.Message,
+                    Created = DateTime.Now,
+                });
+
+                _repository.Update(post); 
+            }
+            else
+            {
+                new SubComment
+                {
+                    MainCommentId = vm.MainCommentId,
+                    Message = vm.Message,
+                    Created = DateTime.Now,
+                };
+            }
+
+            await _repository.SaveChangesAsync();
+
+            return View();
         }
     }
 }
