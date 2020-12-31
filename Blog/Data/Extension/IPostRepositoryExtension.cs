@@ -1,5 +1,6 @@
 ﻿using Blog.Models;
 using Blog.Models.Comments;
+using Blog.ViewModels;
 using System.Collections.Generic;
 
 namespace Blog.Data.Wrapper
@@ -23,10 +24,11 @@ namespace Blog.Data.Wrapper
         void AddSubComment(SubComment comment);
 
         /// <summary>
-        /// 
+        /// Compute the capacity of all posts and return limited amount of posts.
         /// </summary>
-        /// <param name="pageNumber"></param>
+        /// <param name="pageNumber">Current page a user on.</param>
+        /// <param name="category"></param>
         /// <returns></returns>
-        List<Post> GetAllPostsByPagination(int pageNumber);
+        IndexViewModel GetAllPostsByPagination(int pageNumber, string category);
     }
 }

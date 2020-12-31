@@ -32,13 +32,7 @@ namespace Blog.Controllers
             if (pageNumber < 1)
                 return RedirectToAction("Index", new { pageNumber = 1, category });
 
-            var vm = new IndexViewModel
-            {
-                PageNumber = pageNumber,
-                Posts = string.IsNullOrEmpty(category)
-                    ? _postRepositoryExtension.GetAllPostsByPagination(pageNumber)
-                    : _repository.GetAllByCondition(post => post.Category.ToLower().Equals(category.ToLower()))
-            };
+            var vm = _postRepositoryExtension.GetAllPostsByPagination(pageNumber, category);
 
             return View(vm);
         }
