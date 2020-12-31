@@ -4,7 +4,6 @@ using Blog.Models.Comments;
 using Blog.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Blog.Data.Wrapper
@@ -48,7 +47,7 @@ namespace Blog.Data.Wrapper
 
             var query = _context.Posts.AsQueryable();
 
-            if(!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category))
             {
                 query = query.Where(p => p.Category.ToLower().Equals(category.ToLower()));
             }
@@ -58,6 +57,7 @@ namespace Blog.Data.Wrapper
             return new IndexViewModel
             {
                 PageNumber = pageNumber,
+                PageCount = (int) Math.Ceiling((double) postCount / pageSize),
                 NextPage = postCount > capacity,
                 Category = category,
                 Posts = query.Skip(skipAmount)
