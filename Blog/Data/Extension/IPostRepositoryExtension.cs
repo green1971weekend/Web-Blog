@@ -27,8 +27,9 @@ namespace Blog.Data.Wrapper
         /// Compute the capacity of all posts and return limited amount of posts.
         /// </summary>
         /// <param name="pageNumber">Current page a user on.</param>
-        /// <param name="category"></param>
+        /// <param name="category">Post category.</param>
+        /// <param name="search">Input search string from user.</param>
         /// <returns></returns>
-        IndexViewModel GetAllPostsByPagination(int pageNumber, string category);
+        IndexViewModel GetAllPostsByPagination(int pageNumber, string category, string search);
     }
 }

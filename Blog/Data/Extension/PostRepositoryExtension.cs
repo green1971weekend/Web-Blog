@@ -38,7 +38,7 @@ namespace Blog.Data.Wrapper
         }
 
         ///<inheritdoc/>
-        public IndexViewModel GetAllPostsByPagination(int pageNumber, string category)
+        public IndexViewModel GetAllPostsByPagination(int pageNumber, string category, string search)
         {
             var pageSize = 5;
             var skipAmount = pageSize * (pageNumber - 1);
@@ -50,6 +50,11 @@ namespace Blog.Data.Wrapper
             {
                 query = query.Where(p => p.Category.ToLower().Equals(category.ToLower()));
             }
+
+            if (!string.IsNullOrEmpty(search))
+                query = query.Where(x => x.Title.Contains(search) 
+                                    || x.Body.Contains(search)
+                                    || x.Description.Contains(search));
 
             var postCount = query.Count();
             var pageCount = (int)Math.Ceiling((double)postCount / pageSize);

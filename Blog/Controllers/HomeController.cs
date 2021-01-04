@@ -27,12 +27,12 @@ namespace Blog.Controllers
             _postRepositoryExtension = postRepositoryExtension ?? throw new ArgumentNullException(nameof(postRepositoryExtension));
         }
 
-        public IActionResult Index(int pageNumber, string category)
+        public IActionResult Index(int pageNumber, string category, string search)
         {
             if (pageNumber < 1)
                 return RedirectToAction("Index", new { pageNumber = 1, category });
 
-            var vm = _postRepositoryExtension.GetAllPostsByPagination(pageNumber, category);
+            var vm = _postRepositoryExtension.GetAllPostsByPagination(pageNumber, category, search);
 
             return View(vm);
         }
