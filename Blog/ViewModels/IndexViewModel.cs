@@ -14,6 +14,8 @@ namespace Blog.ViewModels
     {
         public IEnumerable<Post> Posts { get; set; }
 
+        public IEnumerable<int> Pages { get; internal set; }
+
         public int PageCount { get; set; }
 
         public int PageNumber { get; set; }

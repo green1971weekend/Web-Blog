@@ -15,7 +15,7 @@ namespace Blog.Data.Wrapper
         /// </summary>
         /// <param name="id">Post identifier.</param>
         /// <returns></returns>
-        Post GetIncludedPostEntities(int id);
+        Post GetPostIncludedEntities(int id);
 
         /// <summary>
         /// Add the passing sub comment to the database.

@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Content\**" />
     <Compile Remove="Transfer\**" />
+    <Content Remove="Content\**" />
     <Content Remove="Transfer\**" />
+    <EmbeddedResource Remove="Content\**" />
     <EmbeddedResource Remove="Transfer\**" />
+    <None Remove="Content\**" />
     <None Remove="Transfer\**" />
   </ItemGroup>
 

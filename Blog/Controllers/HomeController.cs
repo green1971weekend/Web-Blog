@@ -39,7 +39,7 @@ namespace Blog.Controllers
 
         public IActionResult Post(int id)
         {
-            var post = _postRepositoryExtension.GetIncludedPostEntities(id);
+            var post = _postRepositoryExtension.GetPostIncludedEntities(id);
 
             return View(post);
         }
@@ -64,7 +64,7 @@ namespace Blog.Controllers
             if (!ModelState.IsValid)
                 return RedirectToAction("Post", new { id = vm.PostId });
 
-            var post = _postRepositoryExtension.GetIncludedPostEntities(vm.PostId);
+            var post = _postRepositoryExtension.GetPostIncludedEntities(vm.PostId);
 
             if (vm.MainCommentId == 0)
             {
