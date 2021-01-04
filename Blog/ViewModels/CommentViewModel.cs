@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Blog.ViewModels
 {
@@ -12,12 +7,21 @@ namespace Blog.ViewModels
     /// </summary>
     public class CommentViewModel
     {
+        /// <summary>
+        /// Post identifier to which this comment belongs.
+        /// </summary>
         [Required]
         public int PostId { get; set; }
 
+        /// <summary>
+        /// Main comment identifier.
+        /// </summary>
         [Required]
         public int MainCommentId { get; set; }
 
+        /// <summary>
+        /// Comment body.
+        /// </summary>
         [Required]
         public string Message { get; set; }
     }

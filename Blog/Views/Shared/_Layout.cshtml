@@ -10,7 +10,7 @@
     <meta name="description" content="@ViewBag.Description" />
     <meta name="keywords" content="@ViewBag.Keywords" />
 
-    @*Choose which css version to load depends on environment*@
+    @*Choose which css version to load depending on the environment*@
     <environment include="Development">
         <link href="~/css/site.css" rel="stylesheet" />
     </environment>
@@ -23,10 +23,13 @@
         <nav>
             <a asp-controller="Home" asp-action="Index">Home</a>
             <a asp-controller="Home" asp-action="Index" asp-route-category="Programming">Programming</a>
-            <a asp-controller="Panel" asp-action="Index">Admin Panel</a>
 
             @if (User.Identity.IsAuthenticated)
             {
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-controller="Panel" asp-action="Index">Admin Panel</a>
+                }
                 <a asp-controller="Auth" asp-action="Logout">Logout</a>
             }
             else

@@ -1,9 +1,5 @@
 ﻿using Blog.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blog.ViewModels
 {
@@ -12,16 +8,34 @@ namespace Blog.ViewModels
     /// </summary>
     public class IndexViewModel
     {
+        /// <summary>
+        /// Post list retrieved by certain conditions.
+        /// </summary>
         public IEnumerable<Post> Posts { get; set; }
 
+        /// <summary>
+        /// List of current accessible pages in a certain range.
+        /// </summary>
         public IEnumerable<int> Pages { get; internal set; }
 
+        /// <summary>
+        /// Common amount of pages for all posts.
+        /// </summary>
         public int PageCount { get; set; }
 
+        /// <summary>
+        /// Current page number the user on.
+        /// </summary>
         public int PageNumber { get; set; }
 
+        /// <summary>
+        /// Indicates to possibility switch to next page of posts.
+        /// </summary>
         public bool NextPage { get; set; }
 
+        /// <summary>
+        /// Category of posts for filtering.
+        /// </summary>
         public string Category { get; set; }
     }
 }

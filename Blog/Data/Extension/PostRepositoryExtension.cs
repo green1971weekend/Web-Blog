@@ -1,4 +1,5 @@
 ﻿using Blog.Data.Repository;
+using Blog.Helper;
 using Blog.Models;
 using Blog.Models.Comments;
 using Blog.ViewModels;
@@ -15,12 +16,9 @@ namespace Blog.Data.Wrapper
 
         private readonly AppDbContext _context;
 
-        private readonly IRepository<Post> _repository;
-
-        public PostRepositoryExtension(IRepository<Post> repository, AppDbContext context)
+        public PostRepositoryExtension(AppDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         ///<inheritdoc/>
@@ -61,54 +59,12 @@ namespace Blog.Data.Wrapper
                 PageNumber = pageNumber,
                 PageCount = pageCount,
                 NextPage = postCount > capacity,
-                Pages = PageNumbers(pageNumber, pageCount),
+                Pages = PageHelper.PageNumbers(pageNumber, pageCount).ToList(),
                 Category = category,
                 Posts = query.Skip(skipAmount)
                              .Take(pageSize)
                              .ToList()
             };
-        }
-
-        /// <summary>
-        /// Page list rendering.
-        /// </summary>
-        /// <param name="pageNumber">Current page number.</param>
-        /// <param name="pageCount">Computed common amount of pages.</param>
-        /// <returns></returns>
-        private IEnumerable<int> PageNumbers(int pageNumber, int pageCount)
-        {
-            List<int> pages = new List<int>();
-
-            int midPoint = pageNumber < 3 ? 3
-                : pageNumber > pageCount - 2 ? pageCount - 2
-                : pageNumber;
-
-            for (int i = midPoint - 2; i <= midPoint + 2; i++)
-            {
-                pages.Add(i);
-            }
-
-            //Smart pagination based on three dots addition to begin and end of pagination list.
-            if (pages[0] != 1)
-            {
-                pages.Insert(0, 1);
-
-                if (pages[1] - pages[0] > 1)
-                {
-                    pages.Insert(1, -1);
-                }
-            }
-
-            if (pages[pages.Count - 1] != pageCount)
-            {
-                pages.Insert(pages.Count, pageCount);
-                if (pages[pages.Count - 1] - pages[pages.Count - 2] > 1)
-                {
-                    pages.Insert(pages.Count - 1, -1);
-                }
-            }
-
-            return pages;
         }
     }
 }
