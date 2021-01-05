@@ -6,19 +6,21 @@
 
 <div class="login_form">
     <h1>Login</h1>
-    <form class="sign-in-form" asp-controller="Auth" asp-action="Login" method="post">
+    <form asp-controller="Auth" asp-action="Login" method="post">
         <div class="txt_field">
-            <input asp-for="UserName" />
+            <input type="text" asp-for="UserName" required />
+            <span></span>
             <label>Username</label>
         </div>
-        <div>
-            <input asp-for="Password" />
+        <div class="txt_field">
+            <input type="password" asp-for="Password" required />
+            <span></span>
             <label>Password</label>
         </div>
-        <div>
-            <input type="submit" value="Sign In" />
-            <p>Still don't have an account?</p>
-            <a asp-controller="Auth" asp-action="Register">Sign Up</a>
+        <div class="pass">Forgot Password?</div>
+        <input type="submit" value="Sign In" />
+        <div class="signup_link">
+            Not a member? <a asp-controller="Auth" asp-action="Register">Sign Up</a>
         </div>
     </form>
 </div>
