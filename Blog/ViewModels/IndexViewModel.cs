@@ -37,5 +37,10 @@ namespace Blog.ViewModels
         /// Category of posts for filtering.
         /// </summary>
         public string Category { get; set; }
+
+        /// <summary>
+        /// Search input string from user.
+        /// </summary>
+        public string Search { get; set; }
     }
 }

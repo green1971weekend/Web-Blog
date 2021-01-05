@@ -351,3 +351,6 @@ MigrationBackup/
 
 # JS Libraries
 /Blog/wwwroot/lib
+
+# Dynamic Content
+/Blog/wwwroot/content/blog

@@ -1,11 +1,9 @@
-﻿using Blog.Data.Repository;
-using Blog.Helper;
+﻿using Blog.Helper;
 using Blog.Models;
 using Blog.Models.Comments;
 using Blog.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Blog.Data.Wrapper
@@ -44,7 +42,8 @@ namespace Blog.Data.Wrapper
             var skipAmount = pageSize * (pageNumber - 1);
             var capacity = skipAmount + pageSize;
 
-            var query = _context.Posts.AsQueryable();
+            // If there is no need to update loaded entities use AsNoTracking method which helps with performance optimization.
+            var query = _context.Posts.AsNoTracking().AsQueryable();
 
             if (!string.IsNullOrEmpty(category))
             {
@@ -52,9 +51,10 @@ namespace Blog.Data.Wrapper
             }
 
             if (!string.IsNullOrEmpty(search))
-                query = query.Where(x => x.Title.Contains(search) 
-                                    || x.Body.Contains(search)
-                                    || x.Description.Contains(search));
+                // EF.Functions.Like - is basically Contains function but more performant sql version for EntityFramework.
+                query = query.Where(x => EF.Functions.Like(x.Title, $"%{search}%")
+                                    || EF.Functions.Like(x.Body, $"%{search}%")
+                                    || EF.Functions.Like(x.Description, $"%{search}%"));
 
             var postCount = query.Count();
             var pageCount = (int)Math.Ceiling((double)postCount / pageSize);
@@ -66,6 +66,7 @@ namespace Blog.Data.Wrapper
                 NextPage = postCount > capacity,
                 Pages = PageHelper.PageNumbers(pageNumber, pageCount).ToList(),
                 Category = category,
+                Search = search,
                 Posts = query.Skip(skipAmount)
                              .Take(pageSize)
                              .ToList()
