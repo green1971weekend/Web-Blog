@@ -6,7 +6,11 @@
 
 <div class="login_form">
     <h1>Login</h1>
-    <span asp-validation-for="UserName"></span>
+
+    <div class="error">
+        <span asp-validation-for="UserName"></span>
+    </div>
+
     <form asp-controller="Auth" asp-action="Login" method="post">
         <div class="txt_field">
             <input type="text" asp-for="UserName" required />

@@ -54,7 +54,7 @@ namespace Blog.Data.Wrapper
                 // EF.Functions.Like - is basically Contains function but more performant sql version for EntityFramework.
                 query = query.Where(x => EF.Functions.Like(x.Title, $"%{search}%")
                                     || EF.Functions.Like(x.Body, $"%{search}%")
-                                    || EF.Functions.Like(x.Description, $"%{search}%"));
+                                    || EF.Functions.Like(x.Description, $"%{0}%"));
 
             var postCount = query.Count();
             var pageCount = (int)Math.Ceiling((double)postCount / pageSize);

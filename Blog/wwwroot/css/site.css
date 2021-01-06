@@ -42,6 +42,11 @@ nav {
         padding: 0 0 20px 0;
         border-bottom: 1px solid silver;
     }
+
+    .login_form .error {
+        text-align: center;
+    }
+
     .login_form form {
         padding: 0 40px;
         box-sizing: border-box;
@@ -140,6 +145,11 @@ nav {
             .signup_link a:hover {
                 text-decoration: underline;
             }
+
+
+.category-container {
+    display: flex;
+}
 
 
 

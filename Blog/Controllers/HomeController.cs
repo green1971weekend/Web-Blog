@@ -37,6 +37,9 @@ namespace Blog.Controllers
             return View(vm);
         }
 
+        public IActionResult Category() => View();
+
+
         public IActionResult Post(int id)
         {
             var post = _postRepositoryExtension.GetPostIncludedEntities(id);

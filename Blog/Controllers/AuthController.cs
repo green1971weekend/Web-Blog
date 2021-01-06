@@ -9,16 +9,12 @@ namespace Blog.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
         private readonly IIdentityService _identityService;
 
-        private string _commonError;
+        public string CommonError { get; set; }
 
-        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IIdentityService identityService)
+        public AuthController(IIdentityService identityService)
         {
-            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
-            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
         }
 
@@ -35,8 +31,8 @@ namespace Blog.Controllers
 
             if(!result.Succeeded)
             {
-                _commonError = string.Join(", ", result.Errors);
-                ModelState.AddModelError("UserName", _commonError);
+                CommonError = string.Join(", ", result.Errors);
+                ModelState.AddModelError("UserName", CommonError);
 
                 return View(vm);
             }
@@ -75,10 +71,10 @@ namespace Blog.Controllers
             {
                 foreach(var error in result.Errors)
                 {
-                    _commonError = string.Join(", ", error);
+                    CommonError = string.Join(", ", error);
                 }
 
-                ModelState.AddModelError("Password", _commonError);
+                ModelState.AddModelError("Password", CommonError);
 
                 return View(vm);
             }
