@@ -1,4 +1,5 @@
-﻿using Blog.ViewModels;
+﻿using Blog.Services.IdentityService;
+using Blog.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,11 +11,15 @@ namespace Blog.Controllers
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IIdentityService _identityService;
 
-        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        private string _commonError;
+
+        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IIdentityService identityService)
         {
             _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
         }
 
         [HttpGet]
@@ -26,15 +31,17 @@ namespace Blog.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel vm)
         {
-            var result = await _signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);   
+            var result = await _identityService.LoginUserAsync(vm.UserName, vm.Password, isPersistent: false, lockoutOnFailure: false);   
 
             if(!result.Succeeded)
             {
+                _commonError = string.Join(", ", result.Errors);
+                ModelState.AddModelError("UserName", _commonError);
+
                 return View(vm);
             }
 
-            var user = await _userManager.FindByNameAsync(vm.UserName);
-            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+            var isAdmin = await _identityService.UserIsAdmin(vm.UserName);
 
             if(isAdmin)
             {
@@ -58,27 +65,29 @@ namespace Blog.Controllers
                 return View(vm);
             }
 
-            var user = new IdentityUser
-            {
-                UserName = vm.Email,
-                Email = vm.Email
-            };
-            var result = await _userManager.CreateAsync(user, vm.Password);
+            var result = await _identityService.CreateUserAsync(vm.Email, vm.Password);
 
             if(result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, false);
-
                 return RedirectToAction("Index", "Home");
             }
+            else
+            {
+                foreach(var error in result.Errors)
+                {
+                    _commonError = string.Join(", ", error);
+                }
 
-            return View(vm);
+                ModelState.AddModelError("Password", _commonError);
+
+                return View(vm);
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await _identityService.LogoutUserAsync();
 
             return RedirectToAction("Index", "Home");
         }

@@ -2,6 +2,7 @@ using Blog.Data;
 using Blog.Data.FileManager;
 using Blog.Data.Repository;
 using Blog.Data.Wrapper;
+using Blog.Services.IdentityService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +17,7 @@ namespace Blog
 {
     public class Startup
     {
-        IConfiguration _config;
+        private readonly IConfiguration _config;
 
         public Startup(IConfiguration config)
         {
@@ -28,13 +29,18 @@ namespace Blog
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IFileManager, FileManager>();
             services.AddScoped<IPostRepositoryExtension, PostRepositoryExtension>();
+            services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_config["DefaultConnection"]));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options => {
+            services.AddIdentity<IdentityUser, IdentityRole>(options => 
+            {
+                options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz";
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
                 options.Password.RequiredLength = 6;
             })
                 .AddEntityFrameworkStores<AppDbContext>();

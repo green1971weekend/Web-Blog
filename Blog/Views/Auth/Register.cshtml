@@ -10,18 +10,18 @@
         <div class="txt_field">
             <input type="text" asp-for="Email" required />
             <label>Username</label>
-            <span asp-validation-for="Email"></span>
         </div>
         <div class="txt_field">
             <input type="password" asp-for="Password" required />
             <label>Password</label>
-            <span asp-validation-for="Password"></span>
         </div>
         <div class="txt_field">
             <input type="password" asp-for="ConfirmPassword" required />
             <label>Confirm Password</label>
-            <span asp-validation-for="ConfirmPassword"></span>
         </div>
+        <span asp-validation-for="Email"></span>
+        <span asp-validation-for="Password"></span>
+        <span asp-validation-for="ConfirmPassword"></span>
         <input type="submit" value="Sign Up" />
         <div class="signup_link">
             ©2021

@@ -8,7 +8,7 @@ namespace Blog.Helper
     public static class PageHelper
     {
         /// <summary>
-        /// Page list rendering.
+        /// Compute a certain amount of post pages base on input data.
         /// </summary>
         /// <param name="pageNumber">Current page number.</param>
         /// <param name="pageCount">Computed common amount of pages.</param>

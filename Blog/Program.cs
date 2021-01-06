@@ -27,11 +27,13 @@ namespace Blog
                 context.Database.EnsureCreated();
 
                 var adminRole = new IdentityRole("Admin");
+                var userRole = new IdentityRole("User");
 
                 if (!context.Roles.Any())
                 {
                     // GetAwaiter() equals to put await before instruction. GetResult() returns result from task.
                     roleManager.CreateAsync(adminRole).GetAwaiter().GetResult();
+                    roleManager.CreateAsync(userRole).GetAwaiter().GetResult();
                 }
 
                 if (!context.Users.Any(u => u.UserName == "admin"))
