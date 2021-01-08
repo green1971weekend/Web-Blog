@@ -1,3 +1,4 @@
+using Blog.Application;
 using Blog.Application.Interfaces;
 using Blog.Infrastructure.Data;
 using Blog.Infrastructure.Persistence;
@@ -25,6 +26,8 @@ namespace Blog
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplication();
+
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IFileManager, FileManager>();
             services.AddScoped<IPostRepositoryExtension, PostRepositoryExtension>();
@@ -35,7 +38,7 @@ namespace Blog
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
-                options.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz";
+                options.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz1234567890";
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;

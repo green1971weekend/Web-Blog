@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
+    /// <summary>
+    /// Controller responsible for user authentication.
+    /// </summary>
     public class AuthController : Controller
     {
         private readonly IIdentityService _identityService;

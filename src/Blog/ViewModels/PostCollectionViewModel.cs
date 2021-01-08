@@ -6,7 +6,7 @@ namespace Blog.ViewModels
     /// <summary>
     /// View model captures on data from front-end razor pages.
     /// </summary>
-    public class IndexViewModel
+    public class PostCollectionViewModel
     {
         /// <summary>
         /// Post list retrieved by certain conditions.

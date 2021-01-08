@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
+    /// <summary>
+    /// Controller for managing the application by admin.
+    /// </summary>
     [Authorize(Roles = "Admin")]
     public class PanelController : Controller
     {

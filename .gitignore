@@ -350,7 +350,7 @@ MigrationBackup/
 .ionide/
 
 # JS Libraries
-/Blog/wwwroot/lib
+/src/Blog/wwwroot/lib
 
 # Dynamic Content
-/Blog/wwwroot/content/blog
+/src/Blog/wwwroot/content/blog
