@@ -39,7 +39,6 @@ namespace Blog.Controllers
         public IActionResult Index()
         {
             var posts = _repository.GetAll();
-
             var dtoPosts = _mapper.Map<IEnumerable<Post>, IEnumerable<PostDto>>(posts);
 
             return View(dtoPosts);

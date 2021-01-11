@@ -1,11 +1,8 @@
 using Blog.Application;
-using Blog.Application.Interfaces;
-using Blog.Infrastructure.Data;
+using Blog.Infrastructure;
 using Blog.Infrastructure.Persistence;
-using Blog.Infrastructure.Services.IdentityService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,25 +24,9 @@ namespace Blog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplication();
-
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<IFileManager, FileManager>();
-            services.AddScoped<IPostRepositoryExtension, PostRepositoryExtension>();
-            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddInfrastructure();
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_config["DefaultConnection"]));
-
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-                options.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz1234567890";
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequiredLength = 6;
-            })
-                .AddEntityFrameworkStores<AppDbContext>();
 
             // Since by default Identity does not have redirect url for the not authorized users we have to override its behavior here.
             // Cookies is responsible for authentication hence the ConfigureApplicationCookie method is needed.

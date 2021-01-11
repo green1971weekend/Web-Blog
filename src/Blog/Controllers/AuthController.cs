@@ -20,12 +20,21 @@ namespace Blog.Controllers
             _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
         }
 
+        /// <summary>
+        /// Render the login page.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Login()
         {
             return View(new LoginViewModel());
         }
 
+        /// <summary>
+        /// Login current user by given credentials.
+        /// </summary>
+        /// <param name="vm">View model info includes credentials.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel vm)
         {
@@ -49,12 +58,21 @@ namespace Blog.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Render the registration page.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Register()
         {
             return View(new RegisterViewModel());
         }
 
+        /// <summary>
+        /// Register current user by given credentials.
+        /// </summary>
+        /// <param name="vm">View model info includes credentials.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel vm)
         {
@@ -82,6 +100,10 @@ namespace Blog.Controllers
             }
         }
 
+        /// <summary>
+        /// Sign the current user out of system.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
