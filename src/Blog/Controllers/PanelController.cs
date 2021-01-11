@@ -60,7 +60,7 @@ namespace Blog.Controllers
         }
 
         /// <summary>
-        /// Render certain post for edition by identifier.
+        /// Render certain post for edition by identifier or create a new one.
         /// </summary>
         /// <param name="id">Post identifier.</param>
         /// <returns></returns>

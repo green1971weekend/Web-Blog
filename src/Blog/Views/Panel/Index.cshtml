@@ -3,24 +3,39 @@
 @{
 
 }
-<h2>Admin Panel</h2>
 
-<a asp-controller="Panel" asp-action="Edit" >
-    Add New Post
-</a>
+<h2 class="admin-panel-title">Post management</h2>
 
-<div>
+<div class="create-new-post">
+    <a asp-controller="Panel" asp-action="Edit">
+        Create Post
+    </a>
+</div>
+
+<div class="edit-posts">
     <ul>
         @foreach (var post in Model)
         {
+            var img_path = $"/Image/{post.Image}";
+
             <li>
-                <a asp-controller="Panel" asp-action="Edit" asp-route-id="@post.Id">
-                    Edit
-                </a>
-                -
-                <a asp-controller="Panel" asp-action="Remove" asp-route-id="@post.Id">
-                    Remove
-                </a>
+                <div class="single-post">
+                    <img src="@img_path" alt="Downloaded image" />
+                    <div class="single-post-description">
+                        <p>Title: @post.Title</p>
+                        <p>Creation date: @post.Created</p>
+                    </div>
+                </div>
+
+                <div class="admin-options">
+                    <a asp-controller="Panel" asp-action="Edit" asp-route-id="@post.Id">
+                        <i class="fas fa-edit"></i>
+                    </a>
+
+                    <a asp-controller="Panel" asp-action="Remove" asp-route-id="@post.Id">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
             </li>
         }
     </ul>

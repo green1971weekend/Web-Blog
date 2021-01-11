@@ -27,6 +27,7 @@ nav {
     }
 
 
+/*Login, register forms*/
 .login_form {
     position: absolute;
     top: 50%;
@@ -152,8 +153,7 @@ nav {
 }
 
 
-
-
+/*Main site image*/
 .main-img {
     position: relative;
     height: 500px;
@@ -173,6 +173,7 @@ nav {
     margin-bottom: 1rem;
 }
 
+/*Search bar*/
 .search {
     color: pink;
     background-color: transparent;
@@ -196,6 +197,7 @@ nav {
     margin: auto;
 }
 
+/*Single post styling*/
 .post {
     margin: 5px;
     position: relative;
@@ -227,10 +229,11 @@ nav {
         text-shadow: 0 0 8px black;
     }
 
-.no-shadow {
-    box-shadow: none;
-}
+    .no-shadow {
+        box-shadow: none;
+    }
 
+/*Pagination styling*/
 .pages {
     display: flex;
     flex-direction: row;
@@ -264,7 +267,57 @@ nav {
     font-size: 24px;
 }
 
+/*Post list for admin edit*/
+.admin-panel-title {
+    text-align: center;
+    font-size: 50px;
+    color: white;
+}
 
+.create-new-post {
+    text-align: center;
+    font-size: 28px;
+}
+
+.edit-posts ul {
+    list-style: none;
+    padding: 0px 40px;
+}
+
+    .edit-posts ul li {
+        display: flex;
+        justify-content: space-around;
+        padding: 36px;
+        color: white;
+    }
+
+.single-post {
+    display: flex;
+}
+
+    .single-post img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        margin: 8px;
+        border-radius: 50%;
+    }
+
+
+.admin-options a {
+    margin: 0 12px;
+}
+
+    .admin-options a .fa-edit {
+        font-size: 36px;
+        color: #ffffff;
+    }
+    .admin-options a .fa-trash {
+        font-size: 36px;
+        color: #a81010;
+    }
+
+/*Media*/
 @media screen and (max-width: 768px) {
     .submit-btn {
         display: inline-block;
