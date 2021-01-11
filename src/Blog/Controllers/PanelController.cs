@@ -1,4 +1,5 @@
-﻿using Blog.Application.DTO;
+﻿using AutoMapper;
+using Blog.Application.DTO;
 using Blog.Application.Interfaces;
 using Blog.Domain.Entities;
 using Blog.ViewModels;
@@ -17,41 +18,38 @@ namespace Blog.Controllers
     public class PanelController : Controller
     {
         private readonly IRepository<Post> _repository;
+
         private readonly IFileManager _fileManager;
 
-        public PanelController(IRepository<Post> repository, IFileManager fileManager)
+        private readonly IMapper _mapper;
+
+        public PanelController(IRepository<Post> repository, 
+                                IFileManager fileManager,
+                                IMapper mapper)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _fileManager = fileManager ?? throw new ArgumentNullException(nameof(fileManager));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        /// <summary>
+        /// Render all existing posts.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             var posts = _repository.GetAll();
 
-            var dtoPosts = new List<PostDto>();
-
-            foreach(var post in posts)
-            {
-                var postDto = new PostDto
-                {
-                    Id = post.Id,
-                    Title = post.Title,
-                    Body = post.Body,
-                    Image = post.Image,
-                    Description = post.Description,
-                    Tags = post.Tags,
-                    Category = post.Category,
-                    Created = post.Created,
-                    MainComments = post.MainComments
-                };
-
-                dtoPosts.Add(postDto);
-            }
+            var dtoPosts = _mapper.Map<IEnumerable<Post>, IEnumerable<PostDto>>(posts);
 
             return View(dtoPosts);
         }
 
+        /// <summary>
+        /// Remove certain post by identifier.
+        /// </summary>
+        /// <param name="id">Post identifier.</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Remove(int id)
         {
@@ -61,27 +59,28 @@ namespace Blog.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Render certain post for edition by identifier.
+        /// </summary>
+        /// <param name="id">Post identifier.</param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Edit(int? id)
         {
             if (id == null)
-            {
                 return View(new PostViewModel());
-            }
 
             var post = _repository.Get((int)id);
-            return View(new PostViewModel
-            {
-                Id = post.Id,
-                Title = post.Title,
-                Body = post.Body,
-                CurrentImage = post.Image,
-                Description = post.Description,
-                Category = post.Category,
-                Tags = post.Tags
-            });
+            var vmPost = _mapper.Map<Post, PostViewModel>(post);
+
+            return View(vmPost);
         }
 
+        /// <summary>
+        /// Edit certain post by identifier.
+        /// </summary>
+        /// <param name="vm">Post view model.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Edit(PostViewModel vm)
         {

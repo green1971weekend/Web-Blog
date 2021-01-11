@@ -45,16 +45,20 @@ namespace Blog.Infrastructure.Data
             var capacity = skipAmount + pageSize;
 
             // If there is no need to update loaded entities use AsNoTracking method which helps with performance optimization.
-            var query = _context.Posts.AsNoTracking().AsQueryable();
+            var query = _context.Posts.AsNoTracking()
+                                        .AsQueryable()
+                                        .OrderBy(post => post.Id);
 
             if (!string.IsNullOrEmpty(category))
             {
-                query = query.Where(p => p.Category.ToLower().Equals(category.ToLower()));
+                query = (IOrderedQueryable<Post>)query
+                            .Where(p => p.Category.ToLower().Equals(category.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(search))
                 // EF.Functions.Like - is basically Contains function but more performant sql version for EntityFramework.
-                query = query.Where(x => EF.Functions.Like(x.Title, $"%{search}%")
+                query = (IOrderedQueryable<Post>)query
+                            .Where(x => EF.Functions.Like(x.Title, $"%{search}%")
                                     || EF.Functions.Like(x.Body, $"%{search}%")
                                     || EF.Functions.Like(x.Description, $"%{0}%"));
 

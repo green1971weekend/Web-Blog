@@ -7,9 +7,9 @@ namespace Blog.MapProfiles
     /// <summary>
     /// Defines a profile for automapper. Mapping from PostCollectionDto to PostCollectionViewModel and vice versa.
     /// </summary>
-    public class IndexViewModelProfile : Profile
+    public class PostCollectionViewModelProfile : Profile
     {
-        public IndexViewModelProfile()
+        public PostCollectionViewModelProfile()
         {
             CreateMap<PostCollectionViewModel, PostCollectionDto>()
                 .ReverseMap();

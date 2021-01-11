@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
+    /// <summary>
+    /// Home controller which responsible for posts, comments rendering.
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly IRepository<Post> _repository;
@@ -74,7 +77,7 @@ namespace Blog.Controllers
         /// </summary>
         /// <param name="image">Image title.</param>
         /// <attributes>Response cache allows to cache resulted images. CacheProfileName indicates to profile defined in startup.cs</attributes>
-        /// <returns>Stream of the requested image.</returns>
+        /// <returns>Stream result of the requested image.</returns>
         [HttpGet("/Image/{image}")]
         [ResponseCache(CacheProfileName = "Monthly")]
         public IActionResult Image(string image)
