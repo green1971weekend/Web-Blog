@@ -174,7 +174,7 @@ nav {
 }
 
 /*Search bar*/
-.search {
+.main-search {
     color: pink;
     background-color: transparent;
     border: none;
@@ -183,7 +183,7 @@ nav {
     border-bottom: 2px solid pink;
 }
 
-    .search::placeholder {
+    .main-search::placeholder {
         color: pink;
     }
 
@@ -315,6 +315,58 @@ nav {
     .admin-options a .fa-trash {
         font-size: 36px;
         color: #a81010;
+    }
+
+
+/*Comments*/
+
+.main-comment {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+
+    .main-comment form input {
+        color: white;
+    }
+
+        .main-comment form input::placeholder {
+            color: lightcyan;
+        }
+
+.comment-submit {
+    display: flex;
+    justify-content: flex-end;
+}
+
+    .comment-submit button {
+        padding: 10px;
+        border-radius: 6px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+        .comment-submit button:hover {
+            padding: 16px;
+            color: white;
+            background-color: cornflowerblue;
+            transition: all .5s ease-out;
+        }
+
+.comment-content {
+    margin: 10px;
+    padding: 10px;
+}
+
+    .comment-content .creaction-date {
+        font-size: 10px;
+        color: lightgray;
+    }
+
+    .comment-content .comment-body {
+        font-size: 14px;
+        color: white;
     }
 
 /*Media*/

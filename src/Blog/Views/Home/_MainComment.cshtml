@@ -4,11 +4,16 @@
 
 }
 
-<div>
+<div class="main-comment">
     <form method="post" asp-controller="Home" asp-action="Comment">
-        <input asp-for="PostId" type="hidden" />
-        <input asp-for="MainCommentId" type="hidden" />
-        <input asp-for="Message" />
-        <button type="submit">Submit</button>
+        <div class="txt_field">
+            <input asp-for="PostId" type="hidden" />
+            <input asp-for="MainCommentId" type="hidden" />
+            <input type="text" asp-for="Message" placeholder="Leave a comment" required />
+            <span></span>
+        </div>
+        <div class="comment-submit">
+            <button type="submit">Leave a comment</button>
+        </div>
     </form>
 </div>
